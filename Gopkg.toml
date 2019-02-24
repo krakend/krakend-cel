@@ -1,0 +1,15 @@
+[[constraint]]
+  name = "github.com/devopsfaith/krakend"
+  version = "0.7.0"
+
+[[constraint]]
+  name = "github.com/gin-gonic/gin"
+  version = "1.3.0"
+
+[[constraint]]
+  version = "0.1.0"
+  name = "github.com/google/cel-go"
+
+[prune]
+  go-tests = true
+  unused-packages = true

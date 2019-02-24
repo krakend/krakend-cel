@@ -1,0 +1,96 @@
+{
+  "version": 2,
+  "name": "My lovely gateway",
+  "port": 8000,
+  "cache_ttl": "3600s",
+  "timeout": "3s",
+  "endpoints": [
+    {
+      "endpoint": "/nick/{nick}",
+      "extra_config":{
+        "github.com/devopsfaith/krakend-cel": [
+          {
+            "check_expr": "req_params.Nick.matches('k.*') && (timestamp(now).getDayOfWeek() + 6) % 7 > 4"
+          }
+        ]
+      },
+      "backend": [
+        {
+          "host": [
+            "https://api.github.com"
+          ],
+          "url_pattern": "/users/{nick}",
+          "whitelist": [
+            "avatar_url",
+            "name",
+            "blog"
+          ],
+          "mapping": {
+            "blog": "website"
+          },
+          "group": "github",
+          "extra_config":{
+            "github.com/devopsfaith/krakend-cel": [
+              {
+                "check_expr": "'::1' in req_headers['X-Forwarded-For']"
+              }
+            ]
+          }
+        },
+        {
+          "host": [
+            "https://api.bitbucket.org"
+          ],
+          "url_pattern": "/2.0/users/{nick}",
+          "whitelist": [
+            "links.avatar",
+            "display_name",
+            "website"
+          ],
+          "mapping": {
+            "display_name": "name"
+          },
+          "group": "bitbucket",
+          "extra_config":{
+            "github.com/devopsfaith/krakend-cel": [
+              {
+                "check_expr": "'website' in resp_data.bitbucket"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "endpoint": "/combination/{id}",
+      "extra_config":{
+        "github.com/devopsfaith/krakend-cel": [
+          {
+            "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 > 4 && int(req_params.Id) % 2 == 0"
+          }
+        ]
+      },
+      "backend": [
+        {
+          "host": [
+            "https://jsonplaceholder.typicode.com"
+          ],
+          "url_pattern": "/posts?userId={id}",
+          "is_collection": true,
+          "mapping": {
+            "collection": "posts"
+          }
+        },
+        {
+          "host": [
+            "https://jsonplaceholder.typicode.com"
+          ],
+          "url_pattern": "/users/{id}",
+          "mapping": {
+            "email": "personal_email"
+          }
+        }
+      ]
+    }
+  ]
+}
