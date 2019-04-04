@@ -10,7 +10,6 @@ import (
 	"github.com/devopsfaith/krakend/logging"
 	"github.com/devopsfaith/krakend/proxy"
 	"github.com/google/cel-go/cel"
-	"github.com/google/cel-go/interpreter"
 )
 
 func ProxyFactory(l logging.Logger, pf proxy.Factory) proxy.Factory {
@@ -93,9 +92,9 @@ func newProxy(l logging.Logger, name string, defs []internal.InterpretableDefini
 	}, nil
 }
 
-func evalChecks(l logging.Logger, name string, a interpreter.Activation, ps []cel.Program) error {
+func evalChecks(l logging.Logger, name string, args map[string]interface{}, ps []cel.Program) error {
 	for i, eval := range ps {
-		res, _, err := eval.Eval(a)
+		res, _, err := eval.Eval(args)
 		resultMsg := fmt.Sprintf("CEL: %s evaluator #%d result: %v - err: %v", name, i, res, err)
 
 		if v, ok := res.Value().(bool); !ok || !v {
@@ -107,24 +106,24 @@ func evalChecks(l logging.Logger, name string, a interpreter.Activation, ps []ce
 	return nil
 }
 
-func newReqActivation(r *proxy.Request, now string) interpreter.Activation {
-	return interpreter.NewActivation(map[string]interface{}{
+func newReqActivation(r *proxy.Request, now string) map[string]interface{} {
+	return map[string]interface{}{
 		internal.PreKey + "_method":  r.Method,
 		internal.PreKey + "_path":    r.Path,
 		internal.PreKey + "_params":  r.Params,
 		internal.PreKey + "_headers": r.Headers,
 		internal.NowKey:              now,
-	})
+	}
 }
 
-func newRespActivation(r *proxy.Response, now string) interpreter.Activation {
-	return interpreter.NewActivation(map[string]interface{}{
+func newRespActivation(r *proxy.Response, now string) map[string]interface{} {
+	return map[string]interface{}{
 		internal.PostKey + "_completed":        r.IsComplete,
 		internal.PostKey + "_metadata_status":  r.Metadata.StatusCode,
 		internal.PostKey + "_metadata_headers": r.Metadata.Headers,
 		internal.PostKey + "_data":             r.Data,
 		internal.NowKey:                        now,
-	})
+	}
 }
 
 var timeNow = time.Now

@@ -10,7 +10,15 @@
   version = "4.7.1"
 
 [[projects]]
-  digest = "1:06a45f1816b67c61e008fbf1e8f74bbd507097ae4dc64754a5cfa56ccebbe980"
+  branch = "master"
+  digest = "1:e82606c8a330aab4fbd5b0c75aa5228de92964400154a4ed41fb0b0b3125ccc2"
+  name = "github.com/devopsfaith/flatmap"
+  packages = ["tree"]
+  pruneopts = "UT"
+  revision = "8d71d61e07ac04dcb1661ae30e22893a66439981"
+
+[[projects]]
+  digest = "1:defb8a3de7026f011717b378495d13804f54a2f76a7078647061a6cc682f15af"
   name = "github.com/devopsfaith/krakend"
   packages = [
     "config",
@@ -27,8 +35,8 @@
     "transport/http/server",
   ]
   pruneopts = "UT"
-  revision = "f82f671d8f1dc151d22949a5a3902f487c76ac23"
-  version = "0.7.0"
+  revision = "1d20c1916774358fb9a86726f1e9633e133c5b90"
+  version = "0.9.0"
 
 [[projects]]
   branch = "master"
@@ -71,7 +79,7 @@
   version = "v1.2.0"
 
 [[projects]]
-  digest = "1:61e14600ee601e5e04ba395b93f3df71c11350d97416c2609293b8cdf3cf0fb1"
+  digest = "1:1e98aded5a0fada6221009a181b944124f31d6615ec8057be8424f55c1fb6370"
   name = "github.com/google/cel-go"
   packages = [
     "cel",
@@ -92,8 +100,8 @@
     "parser/gen",
   ]
   pruneopts = "UT"
-  revision = "81d826ac4515a47311b5e8734449e3a6ac7afceb"
-  version = "v0.1.0"
+  revision = "2c29ff3f5d3d7856e562e821214cc9c77657b853"
+  version = "v0.2.0"
 
 [[projects]]
   digest = "1:be97e109f627d3ba8edfef50c9c74f0d0c17cbe3a2e924a8985e4804a894f282"
