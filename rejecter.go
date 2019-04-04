@@ -8,7 +8,6 @@ import (
 	"github.com/devopsfaith/krakend/config"
 	"github.com/devopsfaith/krakend/logging"
 	"github.com/google/cel-go/cel"
-	"github.com/google/cel-go/interpreter"
 )
 
 func NewRejecter(l logging.Logger, cfg *config.EndpointConfig) *Rejecter {
@@ -44,7 +43,7 @@ func (r *Rejecter) Reject(data map[string]interface{}) bool {
 		internal.NowKey: now,
 	}
 	for i, eval := range r.evaluators {
-		res, _, err := eval.Eval(interpreter.NewActivation(reqActivation))
+		res, _, err := eval.Eval(reqActivation)
 		resultMsg := fmt.Sprintf("CEL: %s rejecter #%d result: %v - err: %v", r.name, i, res, err)
 
 		if v, ok := res.Value().(bool); !ok || !v {
