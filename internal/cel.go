@@ -128,6 +128,7 @@ func defaultDeclarations() cel.EnvOption {
 		decls.NewIdent(PreKey+"_path", decls.String, nil),
 		decls.NewIdent(PreKey+"_params", decls.NewMapType(decls.String, decls.String), nil),
 		decls.NewIdent(PreKey+"_headers", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
+		decls.NewIdent(PreKey+"_querystring", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
 
 		decls.NewIdent(PostKey+"_completed", decls.Bool, nil),
 		decls.NewIdent(PostKey+"_metadata_status", decls.Int, nil),
