@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net/url"
 	"strconv"
 	"testing"
 	"time"
@@ -13,6 +14,55 @@ import (
 	"github.com/devopsfaith/krakend/logging"
 	"github.com/devopsfaith/krakend/proxy"
 )
+
+func TestProxyFactory_reqQuerystring(t *testing.T) {
+	expectedResponse := &proxy.Response{Data: map[string]interface{}{"ok": true}, IsComplete: true}
+
+	prxy, err := ProxyFactory(logging.NoOp, dummyProxyFactory(expectedResponse)).New(&config.EndpointConfig{
+		Endpoint: "/",
+		ExtraConfig: config.ExtraConfig{
+			internal.Namespace: []internal.InterpretableDefinition{
+				{CheckExpression: "'2' in req_querystring.y"},
+				{CheckExpression: "int(req_querystring.x[0]) % 2 == 0"},
+			},
+		},
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	for i := 0; i < 100; i++ {
+		query, _ := url.ParseQuery(`x=` + strconv.Itoa(i) + `&y=2&y=3;z`)
+		resp, err := prxy(context.Background(), &proxy.Request{
+			Method:  "GET",
+			Path:    "/some-path",
+			Params:  map[string]string{},
+			Headers: map[string][]string{},
+			Query:   query,
+		})
+
+		if i%2 == 0 {
+			if err != nil {
+				t.Error(err)
+				return
+			}
+
+			if resp != expectedResponse {
+				t.Errorf("unexpected response %+v", resp)
+			}
+		} else {
+			if err == nil {
+				t.Error(err)
+				return
+			}
+
+			if resp != nil {
+				t.Errorf("unexpected response %+v", resp)
+			}
+		}
+	}
+}
 
 func TestProxyFactory_reqParams_int(t *testing.T) {
 	timeNow = func() time.Time {

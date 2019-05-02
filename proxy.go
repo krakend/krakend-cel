@@ -108,11 +108,12 @@ func evalChecks(l logging.Logger, name string, args map[string]interface{}, ps [
 
 func newReqActivation(r *proxy.Request, now string) map[string]interface{} {
 	return map[string]interface{}{
-		internal.PreKey + "_method":  r.Method,
-		internal.PreKey + "_path":    r.Path,
-		internal.PreKey + "_params":  r.Params,
-		internal.PreKey + "_headers": r.Headers,
-		internal.NowKey:              now,
+		internal.PreKey + "_method":      r.Method,
+		internal.PreKey + "_path":        r.Path,
+		internal.PreKey + "_params":      r.Params,
+		internal.PreKey + "_headers":     r.Headers,
+		internal.PreKey + "_querystring": r.Query,
+		internal.NowKey:                  now,
 	}
 }
 
