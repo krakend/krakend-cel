@@ -8,4 +8,4 @@ go:
     - "1.11.x"
 
 script:
-    - make
+    - go test -v -cover ./...
