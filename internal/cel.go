@@ -8,10 +8,10 @@ import (
 	"io"
 	"strings"
 
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
 	"github.com/google/cel-go/cel"
 	"github.com/google/cel-go/checker/decls"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
 )
 
 type InterpretableDefinition struct {

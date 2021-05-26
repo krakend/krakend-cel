@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/devopsfaith/krakend-cel/internal"
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
 	"github.com/google/cel-go/cel"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
 )
 
 func NewRejecter(l logging.Logger, cfg *config.EndpointConfig) *Rejecter {
