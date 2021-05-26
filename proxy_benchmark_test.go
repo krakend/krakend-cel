@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	"github.com/devopsfaith/krakend-cel/internal"
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
-	"github.com/devopsfaith/krakend/proxy"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
+	"github.com/luraproject/lura/proxy"
 )
 
 func BenchmarkProxyFactory_reqParams_int(b *testing.B) {

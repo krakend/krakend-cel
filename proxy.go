@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/devopsfaith/krakend-cel/internal"
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
-	"github.com/devopsfaith/krakend/proxy"
 	"github.com/google/cel-go/cel"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
+	"github.com/luraproject/lura/proxy"
 )
 
 func ProxyFactory(l logging.Logger, pf proxy.Factory) proxy.Factory {
