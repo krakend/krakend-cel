@@ -11,6 +11,7 @@ import (
 )
 
 func NewRejecter(l logging.Logger, cfg *config.EndpointConfig) *Rejecter {
+	logPrefix := "[ENDPOINT: " + cfg.Endpoint + "][CEL]"
 	def, ok := internal.ConfigGetter(cfg.ExtraConfig)
 	if !ok {
 		return nil
@@ -19,12 +20,12 @@ func NewRejecter(l logging.Logger, cfg *config.EndpointConfig) *Rejecter {
 	p := internal.NewCheckExpressionParser(l)
 	evaluators, err := p.ParseJWT(def)
 	if err != nil {
-		l.Debug("CEL: error building the JWT rejecter:", err.Error())
+		l.Debug(logPrefix, "Error building the JWT rejecter:", err.Error())
 		return nil
 	}
 
 	return &Rejecter{
-		name:       cfg.Endpoint,
+		name:       logPrefix,
 		evaluators: evaluators,
 		logger:     l,
 	}
@@ -44,7 +45,7 @@ func (r *Rejecter) Reject(data map[string]interface{}) bool {
 	}
 	for i, eval := range r.evaluators {
 		res, _, err := eval.Eval(reqActivation)
-		resultMsg := fmt.Sprintf("CEL: %s rejecter #%d result: %v - err: %v", r.name, i, res, err)
+		resultMsg := fmt.Sprintf("%s Rejecter #%d result: %v - err: %v", r.name, i, res, err)
 
 		if v, ok := res.Value().(bool); !ok || !v {
 			r.logger.Info(resultMsg)
