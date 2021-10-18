@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/google/cel-go/cel"
@@ -44,23 +43,31 @@ var (
 	ErrNoExpr   = errors.New("cel: no expression")
 )
 
+type ErrorChecking struct {
+	details error
+}
+
+func (e ErrorChecking) Error() string {
+	return fmt.Sprintf("error parsing the expression %s", e.details.Error())
+}
+
 func NewCheckExpressionParser(l logging.Logger) Parser {
 	return Parser{
 		extractor: extractCheckExpr,
-		w:         &logger{l},
+		l:         l,
 	}
 }
 
 func NewModExpressionParser(l logging.Logger) Parser {
 	return Parser{
 		extractor: extractModExpr,
-		w:         &logger{l},
+		l:         l,
 	}
 }
 
 type Parser struct {
 	extractor func(InterpretableDefinition) string
-	w         io.Writer
+	l         logging.Logger
 }
 
 func (p Parser) Parse(definition InterpretableDefinition) (cel.Program, error) {
@@ -68,22 +75,19 @@ func (p Parser) Parse(definition InterpretableDefinition) (cel.Program, error) {
 	if expr == "" {
 		return nil, ErrNoExpr
 	}
-	fmt.Println(expr)
+	p.l.Debug("[CEL]", fmt.Sprintf("Parsing expression: %v", expr))
 	env, err := cel.NewEnv(defaultDeclarations())
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 
 	ast, iss := env.Parse(p.extractor(definition))
 	if iss != nil && iss.Err() != nil {
-		fmt.Println(iss.Err())
-		return nil, ErrParsing
+		return nil, fmt.Errorf("error parsing the expression %s", iss.Err())
 	}
 	c, iss := env.Check(ast)
 	if iss != nil && iss.Err() != nil {
-		fmt.Fprintln(p.w, iss.Err())
-		return nil, ErrChecking
+		return nil, ErrorChecking{details: iss.Err()}
 	}
 
 	return env.Program(c)
@@ -108,7 +112,8 @@ func (p Parser) parseByKey(definitions []InterpretableDefinition, key string) ([
 			continue
 		}
 		v, err := p.Parse(def)
-		if err == ErrNoExpr {
+		if _, ok := err.(ErrorChecking); ok {
+			p.l.Debug("[CEL]", err.Error())
 			continue
 		}
 
@@ -148,14 +153,3 @@ const (
 	JwtKey  = "JWT"
 	NowKey  = "now"
 )
-
-type logger struct {
-	l logging.Logger
-}
-
-func (l *logger) Write(p []byte) (n int, err error) {
-	l.l.Debug("CEL:", string(p))
-	return len(p), nil
-}
-
-var _ io.Writer = &logger{}
