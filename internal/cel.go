@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/cel-go/cel"
 	"github.com/google/cel-go/checker/decls"
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
 )
 
 type InterpretableDefinition struct {
