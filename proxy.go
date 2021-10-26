@@ -24,7 +24,7 @@ func ProxyFactory(l logging.Logger, pf proxy.Factory) proxy.Factory {
 		if !ok {
 			return next, nil
 		}
-		l.Debug(logPrefix, "Loading the extra config detected for pipe", cfg.Endpoint)
+		l.Debug(logPrefix, "Loading configuration")
 
 		p, err := newProxy(l, logPrefix, def, next)
 		if err != nil {
@@ -45,7 +45,7 @@ func BackendFactory(l logging.Logger, bf proxy.BackendFactory) proxy.BackendFact
 		if !ok {
 			return next
 		}
-		l.Debug(logPrefix, "Loading the extra config")
+		l.Debug(logPrefix, "Loading configuration")
 
 		p, err := newProxy(l, logPrefix, def, next)
 		if err != nil {
@@ -68,8 +68,8 @@ func newProxy(l logging.Logger, name string, defs []internal.InterpretableDefini
 		return proxy.NoopProxy, err
 	}
 
-	l.Debug(name, "preEvaluators", preEvaluators)
-	l.Debug(name, "postEvaluators", postEvaluators)
+	l.Debug(name, fmt.Sprintf("%d preEvaluator(s) loaded", len(preEvaluators)))
+	l.Debug(name, fmt.Sprintf("%d postEvaluator(s) loaded", len(postEvaluators)))
 
 	return func(ctx context.Context, r *proxy.Request) (*proxy.Response, error) {
 		now := timeNow().Format(time.RFC3339)
