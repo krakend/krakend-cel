@@ -96,11 +96,16 @@ func evalChecks(l logging.Logger, name string, args map[string]interface{}, ps [
 
 	for i, eval := range ps {
 		res, _, err := eval.Eval(args)
-		resultMsg := fmt.Sprintf("%s Evaluator #%d result: %v - err: %v", name, i, res, err)
+		if err != nil {
+			l.Info(fmt.Sprintf("%s Evaluator #%d failed: %v", name, i, res))
+			return fmt.Errorf("request aborted by evaluator #%d", i)
+		}
+
+		resultMsg := fmt.Sprintf("%s Evaluator #%d result: %v", name, i, res)
 
 		if v, ok := res.Value().(bool); !ok || !v {
 			l.Info(resultMsg)
-			return fmt.Errorf("request aborted by %+v", eval)
+			return fmt.Errorf("request aborted by evaluator #%d", i)
 		}
 		l.Debug(resultMsg)
 	}
