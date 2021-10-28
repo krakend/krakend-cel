@@ -46,7 +46,7 @@ func (r *Rejecter) Reject(data map[string]interface{}) bool {
 	for i, eval := range r.evaluators {
 		res, _, err := eval.Eval(reqActivation)
 		if err != nil {
-			l.Info(fmt.Sprintf("%s Rejecter #%d failed: %v", name, i, res))
+			r.logger.Info(fmt.Sprintf("%s Rejecter #%d failed: %v", r.name, i, res))
 			return true
 		}
 
