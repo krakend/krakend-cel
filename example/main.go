@@ -9,14 +9,14 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
-	"github.com/luraproject/lura/proxy"
-	"github.com/luraproject/lura/router"
-	krakendgin "github.com/luraproject/lura/router/gin"
-	"github.com/luraproject/lura/transport/http/client"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
+	"github.com/luraproject/lura/v2/proxy"
+	krakendgin "github.com/luraproject/lura/v2/router/gin"
+	"github.com/luraproject/lura/v2/transport/http/client"
+	"github.com/luraproject/lura/v2/transport/http/server"
 
-	cel "github.com/devopsfaith/krakend-cel"
+	cel "github.com/devopsfaith/krakend-cel/v2"
 )
 
 func main() {
@@ -51,7 +51,7 @@ func main() {
 		ProxyFactory:   pf,
 		Logger:         logger,
 		HandlerFactory: krakendgin.EndpointHandler,
-		RunServer:      router.RunServer,
+		RunServer:      server.RunServer,
 	})
 
 	sigs := make(chan os.Signal, 1)
