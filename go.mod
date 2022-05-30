@@ -1,4 +1,4 @@
-module github.com/devopsfaith/krakend-cel/v2
+module github.com/krakendio/krakend-cel/v2
 
 go 1.17
 

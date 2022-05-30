@@ -16,7 +16,7 @@ import (
 	"github.com/luraproject/lura/v2/transport/http/client"
 	"github.com/luraproject/lura/v2/transport/http/server"
 
-	cel "github.com/devopsfaith/krakend-cel/v2"
+	cel "github.com/krakendio/krakend-cel/v2"
 )
 
 func main() {
