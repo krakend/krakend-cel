@@ -5,4 +5,12 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_root = "github.com/krakendio/flatmap"
+  import_root = "github.com/krakendio/krakend-cors"
+
+[[transformers]]
+name = "gofmt"
+enabled = true
+
+[[transformers]]
+name = "gofumpt"
+enabled = true
