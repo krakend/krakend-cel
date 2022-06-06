@@ -127,20 +127,20 @@ func (p Parser) parseByKey(definitions []InterpretableDefinition, key string) ([
 
 func defaultDeclarations() cel.EnvOption {
 	return cel.Declarations(
-		decls.NewIdent(NowKey, decls.String, nil),
+		decls.NewConst(NowKey, decls.String, nil),
 
-		decls.NewIdent(PreKey+"_method", decls.String, nil),
-		decls.NewIdent(PreKey+"_path", decls.String, nil),
-		decls.NewIdent(PreKey+"_params", decls.NewMapType(decls.String, decls.String), nil),
-		decls.NewIdent(PreKey+"_headers", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
-		decls.NewIdent(PreKey+"_querystring", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
+		decls.NewConst(PreKey+"_method", decls.String, nil),
+		decls.NewConst(PreKey+"_path", decls.String, nil),
+		decls.NewConst(PreKey+"_params", decls.NewMapType(decls.String, decls.String), nil),
+		decls.NewConst(PreKey+"_headers", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
+		decls.NewConst(PreKey+"_querystring", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
 
-		decls.NewIdent(PostKey+"_completed", decls.Bool, nil),
-		decls.NewIdent(PostKey+"_metadata_status", decls.Int, nil),
-		decls.NewIdent(PostKey+"_metadata_headers", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
-		decls.NewIdent(PostKey+"_data", decls.NewMapType(decls.String, decls.Dyn), nil),
+		decls.NewConst(PostKey+"_completed", decls.Bool, nil),
+		decls.NewConst(PostKey+"_metadata_status", decls.Int, nil),
+		decls.NewConst(PostKey+"_metadata_headers", decls.NewMapType(decls.String, decls.NewListType(decls.String)), nil),
+		decls.NewConst(PostKey+"_data", decls.NewMapType(decls.String, decls.Dyn), nil),
 
-		decls.NewIdent(JwtKey, decls.NewMapType(decls.String, decls.Dyn), nil),
+		decls.NewConst(JwtKey, decls.NewMapType(decls.String, decls.Dyn), nil),
 	)
 }
 
