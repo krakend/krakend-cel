@@ -215,7 +215,6 @@ func TestProxyFactory_reqParams_string(t *testing.T) {
 		}
 
 		for i := 0; i < 100; i++ {
-
 			for _, tc := range []struct {
 				success bool
 				nick    string

@@ -93,7 +93,6 @@ func newProxy(l logging.Logger, name string, defs []internal.InterpretableDefini
 }
 
 func evalChecks(l logging.Logger, name string, args map[string]interface{}, ps []cel.Program) error {
-
 	for i, eval := range ps {
 		res, _, err := eval.Eval(args)
 		if err != nil {
