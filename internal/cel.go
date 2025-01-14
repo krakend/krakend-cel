@@ -19,7 +19,8 @@ type InterpretableDefinition struct {
 }
 
 func ConfigGetter(e config.ExtraConfig) ([]InterpretableDefinition, bool) {
-	def := []InterpretableDefinition{}
+	var def []InterpretableDefinition
+
 	v, ok := e[Namespace]
 	if !ok {
 		return def, ok
@@ -106,7 +107,8 @@ func (p Parser) ParseJWT(definitions []InterpretableDefinition) ([]cel.Program, 
 }
 
 func (p Parser) parseByKey(definitions []InterpretableDefinition, key string) ([]cel.Program, error) {
-	res := []cel.Program{}
+	var res []cel.Program
+
 	for _, def := range definitions {
 		if !strings.Contains(p.extractor(def), key) {
 			continue
