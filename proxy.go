@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/google/cel-go/cel"
-	"github.com/krakendio/krakend-cel/v2/internal"
+	"github.com/krakend/krakend-cel/v2/internal"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
 	"github.com/luraproject/lura/v2/proxy"
