@@ -72,7 +72,7 @@ func newProxy(l logging.Logger, name string, defs []internal.InterpretableDefini
 	l.Debug(name, fmt.Sprintf("%d postEvaluator(s) loaded", len(postEvaluators)))
 
 	return func(ctx context.Context, r *proxy.Request) (*proxy.Response, error) {
-		now := timeNow().Format(time.RFC3339)
+		now := timeNow().Format("2006-01-02T15:04:05.999Z07:00")
 
 		if err := evalChecks(l, name+"[pre]", newReqActivation(r, now), preEvaluators); err != nil {
 			return nil, err

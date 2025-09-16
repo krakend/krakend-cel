@@ -2,7 +2,6 @@ package cel
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/google/cel-go/cel"
 	"github.com/krakend/krakend-cel/v2/internal"
@@ -38,7 +37,7 @@ type Rejecter struct {
 }
 
 func (r *Rejecter) Reject(data map[string]interface{}) bool {
-	now := timeNow().Format(time.RFC3339)
+	now := timeNow().Format("2006-01-02T15:04:05.999Z07:00")
 	reqActivation := map[string]interface{}{
 		internal.JwtKey: data,
 		internal.NowKey: now,
