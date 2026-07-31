@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/krakend/krakend-cel/v2/internal"
-	"github.com/luraproject/lura/v2/config"
-	"github.com/luraproject/lura/v2/logging"
+	"github.com/krakend/krakend-cel/v3/internal"
+	"github.com/luraproject/lura/v3/config"
+	"github.com/luraproject/lura/v3/logging"
 )
 
 func TestRejecter_Reject(t *testing.T) {
