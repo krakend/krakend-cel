@@ -8,7 +8,7 @@
     {
       "endpoint": "/nick/{nick}",
       "extra_config":{
-        "github.com/devopsfaith/krakend-cel": [
+        "validation/cel": [
           {
             "check_expr": "req_params.Nick.matches('k.*') && (timestamp(now).getDayOfWeek() + 6) % 7 > 4"
           }
@@ -30,7 +30,7 @@
           },
           "group": "github",
           "extra_config":{
-            "github.com/devopsfaith/krakend-cel": [
+            "validation/cel": [
               {
                 "check_expr": "'::1' in req_headers['X-Forwarded-For']"
               }
@@ -52,7 +52,7 @@
           },
           "group": "bitbucket",
           "extra_config":{
-            "github.com/devopsfaith/krakend-cel": [
+            "validation/cel": [
               {
                 "check_expr": "'website' in resp_data.bitbucket"
               }
@@ -64,7 +64,7 @@
     {
       "endpoint": "/combination/{id}",
       "extra_config":{
-        "github.com/devopsfaith/krakend-cel": [
+        "validation/cel": [
           {
             "check_expr": "(timestamp(now).getDayOfWeek() + 6) % 7 > 4 && int(req_params.Id) % 2 == 0"
           }

@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/google/cel-go/cel"
-	"github.com/krakend/krakend-cel/v2/internal"
-	"github.com/luraproject/lura/v2/config"
-	"github.com/luraproject/lura/v2/logging"
+	"github.com/krakend/krakend-cel/v3/internal"
+	"github.com/luraproject/lura/v3/config"
+	"github.com/luraproject/lura/v3/logging"
 )
 
 func NewRejecter(l logging.Logger, cfg *config.EndpointConfig) *Rejecter {
