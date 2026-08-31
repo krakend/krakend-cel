@@ -14,7 +14,7 @@ import (
 
 func ProxyFactory(l logging.Logger, pf proxy.Factory) proxy.Factory {
 	return proxy.FactoryFunc(func(cfg *config.EndpointConfig) (proxy.Proxy, error) {
-		logPrefix := "[ENDPOINT: " + cfg.Endpoint + "][CEL]"
+		logPrefix := fmt.Sprintf("[ENDPOINT: %s %s][CEL]", cfg.Method, cfg.Endpoint)
 		next, err := pf.New(cfg)
 		if err != nil {
 			return next, err
@@ -38,7 +38,9 @@ func ProxyFactory(l logging.Logger, pf proxy.Factory) proxy.Factory {
 
 func BackendFactory(l logging.Logger, bf proxy.BackendFactory) proxy.BackendFactory {
 	return func(cfg *config.Backend) proxy.Proxy {
-		logPrefix := "[BACKEND: " + cfg.URLPattern + "][CEL]"
+		logPrefix := fmt.Sprintf("[BACKEND: %s %s -> %s %s][CEL]",
+			cfg.ParentEndpointMethod, cfg.ParentEndpoint,
+			cfg.Method, cfg.URLPattern)
 		next := bf(cfg)
 
 		def, ok := internal.ConfigGetter(cfg.ExtraConfig)
