@@ -4,8 +4,8 @@ go 1.25.0
 
 require (
 	github.com/gin-gonic/gin v1.12.0
-	github.com/google/cel-go v0.29.0
-	github.com/luraproject/lura/v3 v3.0.0-20260729144624-4b3057d09348
+	github.com/google/cel-go v0.30.0
+	github.com/luraproject/lura/v3 v3.0.1
 )
 
 require (
